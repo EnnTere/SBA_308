@@ -1,249 +1,193 @@
-// Course Info Data
-const courseInfoObj = {
-  "id": 201,
-  "name": "Technical Game Design",
+
+const CourseInfo = {
+  id: 451,
+  name: "Introduction to JavaScript"
 };
 
-// Assignment Group Data
-const assignmentGroup = {
-  "id": 8936,
-  "name": "Fundamentals of Unity",
-  "course_id": courseInfoObj.id, //[201 or courseInfoObj.id], // ID of the course the assignment group belongs to // hard code or set to grab from above?
-  "group_weight": 25, // the percentage weight of the entire assignment group
-  "assignments": [{ //Assignment's object info => add multiples later
-      "id": 1,
-      "name": "The Editor Interface", //3D Scene Navigation, Prefabs
-      "due_at": 2023-10-15,  // the due date for the assignment
-      "points_possible": 50,  // the maximum points possible for the assignment
+// The provided assignment group.
+const AssignmentGroup = {
+  id: 12345,
+  name: "Fundamentals of JavaScript",
+  course_id: 451, // ID of the course the assignment group belongs to
+  group_weight: 25, // the percentage weight of the entire assignment group
+  assignments: [
+    {
+      id: 1,
+      name: "Declare a Variable",
+      due_at: "2023-01-25", // the due date for the assignment
+      points_possible: 50 // the maximum points possible for the assignment
     },
-    { 
-      "id": 2,
-      "name": "3D Scene Navigation",
-      "due_at": 2023-10-10,  // the due date for the assignment
-      "points_possible": 50,  // the maximum points possible for the assignment
+    {
+      id: 2,
+      name: "Write a Function",
+      due_at: "2023-02-27",
+      points_possible: 150
     },
-    { 
-      "id": 3,
-      "name": "Prefabs",
-      "due_at": 2023-10-20,  // the due date for the assignment
-      "points_possible": 100,  // the maximum points possible for the assignment
-    },
-  ],
+    {
+      id: 3,
+      name: "Code the World",
+      due_at: "3156-11-15",
+      points_possible: 500
+    }
+  ]
 };
 
-// Learner Submission Data
-// Instructions say "An array of objects" => add multiples later
-const learnerSubmissionArr = [
+
+// The provided learner submission data.
+const LearnerSubmissions = [
   {
-    "learner_id": 32,
-    "assignment_id": 56, // not sure if I should put a number or grab from: assignmentGroupArr.assignments.id,
-    "submission": {
-      "submitted_at": 2023-10-25,
-      "score": 43,
-    },
+    learner_id: 125,
+    assignment_id: 1,
+    submission: {
+      submitted_at: "2023-01-25",
+      score: 47
+    }
   },
   {
-    "learner_id": 17,
-    "assignment_id": 56, // not sure if I should put a number or grab from: assignmentGroupArr.assignments.id,
-    "submission": {
-      "submitted_at": 2023-10-25,
-      "score": 65,
-    },
+    learner_id: 125,
+    assignment_id: 2,
+    submission: {
+      submitted_at: "2023-02-12",
+      score: 150
+    }
   },
+  {
+    learner_id: 125,
+    assignment_id: 3,
+    submission: {
+      submitted_at: "2023-01-25",
+      score: 400
+    }
+  },
+  {
+    learner_id: 132,
+    assignment_id: 1,
+    submission: {
+      submitted_at: "2023-01-24",
+      score: 39
+    }
+  },
+  {
+    learner_id: 132,
+    assignment_id: 2,
+    submission: {
+      submitted_at: "2023-03-07",
+      score: 140
+    }
+  }
 ];
 
+/////////////////////////////////////////////////////////////
 
 
-////////////////////////////////////////////////////////////////////////////////////////////
-///////// First Steps ///////
-//// Break it down in to simple steps; each object is students, assignments
-//// 	1. start with just trying to generate an array of unique IDs
-//// 	- Try to understand how we got from relations to results & the relation between the data
 
-////// generate an array of unique IDs (grab the ids from multiple objects & put them in an array?)
-//console.log(assignmentGroup.assignments[1]["points_possible"]);
+//////// Function ////////
+function getLearnerData(course, ag, submissions) { 
 
-////// access & iterate over entire array
-////// grab the object + all key:values
-// for (const data of assignmentGroupArr.assignments) {
-//   console.log(data);
-// }
-//// for of loops only supports iterable objects like arrays, not objects
+  // Array for final output
+  let result = [];
 
-///// access & iterate over entire array
-///// grab the object + specific key:values
-// for (const id in assignmentGroupArr.assignments) {
-//   console.log(id);
-// }
-
-//returns length of array
-// for (const submission in learnerSubmissionArr) {
-//   console.log(submission);
-// }
-
-// learnerSubmissionArr
-// // console.log(learnerSubmissionArr[0]); "learner_id"
-
-// array > each object > learner_id
-// learnerSubmissionArr[]["learner_id"]
-
-/////////////////////////////////////////////////////////////////////////////////////
+  //////////////////// Course VAlidation ////////////////////////
+  // Checks if the course and assignments correspond
 
 
-// let courseInfo = () => {
 
-// };
+  ////////////////////////////////////////////////////////
+  try {
+    if (course !== ag.course_id) {
+      console.log("Course found");
+    } else {
+        throw "The course has no matching assignments available";
+    } 
+  } catch (error) {
+      console.log(error);
+      //alert("The course has no matching assignments available");
+  };
+  ////////////////////////////////////////////////////////
+  // if (course !== ag.course_id) {
+  //   throw new Error("Assignment group does not belong to the specified course");
+  // }
 
 
-function getLearnerData(courseInfo, assignmentGrp, [submission]) {
-  const assignments = assignmentGroup.assignments;
-  const assignmentScores = {};
-  const students = {};
 
-  for (const submission of LearnerSubmissions) {
-    const learnerIds = learnerSubmissionArr[i]["learner_id"];
+  //////////////////// Student Objects ////////////////////////
+  // Iterate through LearnerSubmissions array
+  // Grab student ids
+  // Store in a new array
 
+  let learnerIds = [];
+
+  for (let i = 0; i < submissions.length; i++) {
+    // Check if ID is in the array & only add if it isn't 
+    // (trying out newly learned placement for NOT operator to shorten if statement)
+    if (!learnerIds.includes(submissions[i].learner_id)) {
+      learnerIds.push(submissions[i].learner_id);
+    }
+    //console.log(learnerIds);
   }
 
-
-};
-
-// Grabs student IDs
-studentList = (studentId) => {
-  const studentArr = [];
-  for (let i = 0; i < studentId.length; i++) {
-    studentArr = learnerSubmissionArr[i]["learner_id"];
-    //console.log(`learner ids: ${learnerIds}`); 
-    studentArr.push(studentId[i])
-  };
-};
-
-
-studentList = (studentId) => {
-  const studentArr = [];
-  for (let i = 0; i < studentId.length; i++) {
-    studentArr = learnerSubmissionArr[i]["learner_id"];
-    //console.log(`learner ids: ${learnerIds}`); 
-    studentArr.push(studentId[i])
-  };
-  return studentArr
-};
-
-console.log(studentList);
-
-
-
-  let learnerIds = []
-    for (let i = 0; i < learnerSubmissionArr.length; i++) {
-      learnerIds = learnerSubmissionArr[i]["learner_id"];
-      //console.log(`learner ids: ${learnerIds}`); 
-      learnerIds.push()
+  // Create objects for each student found to have a learner ID
+  // Iterates through the previously created learner ID array to insert ID in to student object
+  for (let i = 0; i < learnerIds.length; i++) {
+    let studentObjs = {
+      id: learnerIds[i],
     };
-    return learnerIds;
-};
 
-// Grabs learner's score
-learnerScore = (submissionScore) => {
-  let submissionScore
-    for (let i = 0; i < learnerSubmissionArr.length; i++) {
-      submissionScore = learnerSubmissionArr[i]["submission"]["score"];
-      //console.log(`submissions scores: ${submissionScore}`);
+    //console.log(learnerIds);
+
+
+      //////////////////// Student Assignment Score Calculation ////////////////////////
+      // avg per assignment = assignment score / assignment points possible
+      // weighted avg = total submission score / total assignment points
+
+
+      // Store total possible points & scored points across assignments
+      let scoreTotal = 0;
+      let possiblePntsTotal = 0;
+
+      let submission;
+
+      for (let s = 0; s < submissions.length; s++) {
+        if (
+          submissions[s].learner_id === learnerIds[i] && 
+          submissions[s].assignment_id === ag.assignments[i].id
+        ) {
+          submission = submissions[s];
+          break;  // Once match is found, stop executing statement
+        };
+      };
+      
+
+      // Grab possible assignment points & scored points per assignments
+      let assignmentScore = submission.submission.score;
+      let possiblePnts = ag.assignments[i].points_possible;
+
+      // Calculate student's individual assessment scores
+      studentObjs[ag.assignments[i].id] = assignmentScore / possiblePnts;
+
+      // Calculate totals for scores & assignments points
+      scoreTotal += assignmentScore;
+      possiblePntsTotal += possiblePnts;
+
+      // Calculate student's weighted average
+      studentObjs.avg = scoreTotal / possiblePntsTotal;
+
+    //no time to attempt lateness check?
+    // if() {
+    //   //AssignmentScore = [math?]
+      
+    // }
+
+    //put the above student objects in to the results output
+    result.push(studentObjs);
     };
-    return submissionScore;
+
+    //console.log(result);
+    return result;
 };
 
 
-    // Iterates through the assignment group data 
-    // grabs assignment points possible
-pointsPossible = (possiblePoints) => {
-  let possiblePoints
-    for (let i = 0; i < assignmentGroup.assignments.length; i++) {
-      possiblePoints = assignmentGroup.assignments[i]["points_possible"];
-      //console.log(`possible points: ${possiblePoints}`);
-    };
-    return possiblePoints;
-};
 
 
-// calculates weighted average
-submissionScore = learnerScore();
-possiblePoints = pointsPossible();
-
-calcWeightedAvg = (submissionScore, possiblePoints) => {
-    let weightedAvg = submissionScore / possiblePoints;
-    //console.log(`weight: ${weightedAvg}`);
-    return weightedAvg;
-};
-
-// console.log(calcWeightedAvg(), pointsPossible(), learnerScore(), studentList())
-
-console.log(calcWeightedAvg(10, 5))
-
-// grab the data & add to the object in an Array
-// output = [{}]
-
-
-
-// const getLearnerData = (courseInfo, assignmentGrp, [submission]) => {
-  
-//   output = {}
-
-
-  // Iterates through the learner submission data & grabs IDs
-  // for (let i = 0; i < learnerSubmissionArr.length; i++) {
-
-  // };
-
-
-
-
-
-
-  //console.log(output)
-
-  //   return learnerIds;
-  // return submissionScore;
-  // return possiblePoints;
-
-
-// };
-
-
-
-
-
-
-// for (const points_possible in assignmentGroup.assignments) {
-//   console.log(assignmentGroup.assignments[points_possible]);
-// }
-
-
-//object > array > 
-// const assignmentGroup = {
-//   "id": 8936,
-//   "name": "Fundamentals of Unity",
-//   "course_id": courseInfoObj.id, //[201 or courseInfoObj.id], // ID of the course the assignment group belongs to // hard code or set to grab from above?
-//   "group_weight": 25, // the percentage weight of the entire assignment group
-//   "assignments": [{ //Assignment's object info => add multiples later
-//       "id": 1,
-//       "name": "The Editor Interface", //3D Scene Navigation, Prefabs
-//       "due_at": 2023-10-15,  // the due date for the assignment
-//       "points_possible": 50,  // the maximum points possible for the assignment
-//     },
-
-
-
-
-    
-// object > array > points
-// assignmentGroupArr > assignmentInfoObj > "points_possible": number
-
-
-
-
-
-
-
-
-
-// getLearnerData(courseInfo, assignmentGrp, [submission])
+const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
+console.log(result);
